@@ -54,3 +54,9 @@ div.board {
   overflow: hidden;
   margin: 0 auto;
 }
+
+div.players {
+  width: 125px;
+  height: 125px;
+ 
+}
