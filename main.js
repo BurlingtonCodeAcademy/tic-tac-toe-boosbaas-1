@@ -1,40 +1,89 @@
-let startGame = document.getElementById("start")
-startGame.addEventListener('click', function (event) {
-    startGame.disabled = true;
-    startGame.innerHTML=("Game On!")
-})
-/**** when number entered into box, added to first added to crosses then to naughts */
-/***need state and switch */
-let naughts = document.getElementById("naughts")
-let crosses = document.getElementById("crosses")
-let naughtsArray = [];
-let crossesArray = [];
+const ticTacToeGame = new TicTacToeGame();
+ticTacToeGame.start();
 
-let boardSquares = document.querySelectorAll('.row')
-let testArray = Array.from(boardSquares)
-console.log(testArray)
-alert("this is testArray" + boardSquares )
-let turn = 0
+function TicTacToeGame() {
+    const board = new Board();
+    const humanPlayer = new HumanPlayer(board);
+    const computerPlayer = new ComputerPlayer(board);
+    let turn = 0;
 
-function takingTurns(turn) {
-    while (turn < 6) {
-        let valueOfTurn = testArray.pop
-        if (turn % 2 === 0) {
-
-            naughtsArray.push(valueOfTurn);
-
-        } else {
-
-            crossesArray.push(valueOfTurn);
-        }
-        turn++
+    this.start = function () {
+        const config = { childList: true };
+        const observer = new MutationObserver(() => takeTurn());
+        board.positions.forEach((el) => observer.observe(el, config));
+        takeTurn();
     }
 
+    function takeTurn() {
+        if (board.checkForWinner()) {
+            return;
+        }
+
+        if (turn % 2 === 0) {
+            humanPlayer.takeTurn();
+        } else {
+            computerPlayer.takeTurn();
+        }
+
+        turn++;
+    };
 }
-takingTurns(turn)
- 
 
+function Board() {
+    this.positions = Array.from(document.querySelectorAll('.col'));
 
+    this.checkForWinner = function () {
+        let winner = false;
 
+        const winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8]
+        ];
 
+        const positions = this.positions;
+        console.log('this is positions ' + positions)
+        winningCombinations.forEach((winningCombo) => {
+            const pos0InnerText = positions[winningCombo[0]].innerText;
+            const pos1InnerText = positions[winningCombo[1]].innerText;
+            const pos2InnerText = positions[winningCombo[2]].innerText;
+            const isWinningCombo = pos0InnerText !== '' &&
+                pos0InnerText === pos1InnerText && pos1InnerText === pos2InnerText;
+            if (isWinningCombo) {
+                winner = true;
+                winningCombo.forEach((index) => {
+                    positions[index].className += ' winner';
+                })
+            }
+            
+        });
 
+        return winner;
+    }
+}
+
+function ComputerPlayer(board) {
+    this.takeTurn = function () {
+        let availablePositions = board.positions.filter((p) => p.innerText === '');
+        const move = Math.floor(Math.random() * (availablePositions.length - 0));
+        availablePositions[move].innerText = 'O';
+    }
+}
+
+function HumanPlayer(board) {
+    this.takeTurn = function () {
+        board.positions.forEach(el =>
+            el.addEventListener('click', handleTurnTaken));
+    }
+
+    function handleTurnTaken(event) {
+        event.target.innerText = 'X';
+        board.positions
+            .forEach(el => el.removeEventListener('click', handleTurnTaken));
+    }
+}
