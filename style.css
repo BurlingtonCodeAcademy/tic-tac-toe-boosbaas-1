@@ -1,56 +1,37 @@
-body {
-  background-color: rgb(255, 255, 255);
-  width: 1000px;
-  margin: 10px auto;
-  text-align: center;
-  padding: 10px;
-  user-select: none;
+.container{
+  width: 320px;
+  height: 32px;
+  margin: auto;
+  margin-top: 100px;
 }
-
-h2 {
-  font-size: 30px;
-  text-align: center;
-  height: 75px;
+h1 {
+  text-align: center;;
+  font-size: 40px;
 }
-
-span{
-  font-size: 75px;
-  margin-top: 20px;
+.row{
+  height: 100px;
 }
-
-div[id^="row-"] div {
-  width: 200px;
-  height: 200px;
-  border: 1px solid red;
+.row{
+  height: 100px;
+}
+.col {
+  height: 100px;
+  width: 100px;
   float: left;
-
+  font-size: 100px;
+  text-align:center;
+  line-height: 100px;
+}
+.col:hover{
+  background-color: aqua;
+}
+.border-b{
+  border-bottom: 10px solid darkblue;
+}
+.border-r{
+  border-right: 10px solid darkblue;
+}
+.winner{
+  color: indigo;
 }
 
-div[id^="row-"] div:last-child {
-  border-right: none;
-}
-
-div[id^="row-"] div:first-child {
-  border-left: none;
-}
-
-div[id="row-1"] div{
-  border-top: none;
-}
-
-div[id="row-3"] div{
-    border-bottom: none;
-}
-
-div[id^="row-"] {
-  clear: float;
-  width: 608px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-div.board {
-  width: 608px;
-  overflow: hidden;
-  margin: 0 auto;
-}
