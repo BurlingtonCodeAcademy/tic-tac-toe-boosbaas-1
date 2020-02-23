@@ -71,7 +71,7 @@ function ComputerPlayer(board) {
     this.takeTurn = function () {
         let availablePositions = board.positions.filter((p) => p.innerText === '');
         const move = Math.floor(Math.random() * (availablePositions.length - 0));
-        availablePositions[move].innerText = 'O';
+        availablePositions[move].innerText = document.getElementById("naughts");
     }
 }
 
@@ -82,7 +82,7 @@ function HumanPlayer(board) {
     }
 
     function handleTurnTaken(event) {
-        event.target.innerText = 'X';
+        event.target.innerText = document.getElementById("crosses");
         board.positions
             .forEach(el => el.removeEventListener('click', handleTurnTaken));
     }

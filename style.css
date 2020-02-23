@@ -35,3 +35,8 @@ h1 {
   color: indigo;
 }
 
+.players{
+  width: 75px;
+  height: 75px;
+  align-self: center;
+}
